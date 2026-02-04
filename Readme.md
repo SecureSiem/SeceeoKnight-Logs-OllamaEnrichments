@@ -21,7 +21,7 @@
         <executable>usb_ollama_enrich.sh</executable>
         <timeout_allowed>no</timeout_allowed>
        </command>
-
+   
        <active-response>
         <disabled>no</disabled>
         <command>usb_ollama_enrich</command>
@@ -67,5 +67,12 @@ rule:
        sudo touch /var/ossec/logs/seceoknight-enrich.log
        sudo chmod 640 /var/ossec/logs/seceoknight-enrich.log
        sudo chown root:wazuh /var/ossec/logs/seceoknight-enrich.log 2>/dev/null || true
+
+
+# ABOVE IS NOT WORK ON LATEST WAZUH VERSIONS - FOLLOW THIS FOR NEW VERSIONS
+
+1. Create Python enrichment watcher
+
+       nano /usr/local/bin/usb_ollama_watcher.py
 
 
