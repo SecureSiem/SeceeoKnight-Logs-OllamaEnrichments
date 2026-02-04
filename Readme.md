@@ -69,10 +69,46 @@ rule:
        sudo chown root:wazuh /var/ossec/logs/seceoknight-enrich.log 2>/dev/null || true
 
 
-# ABOVE IS NOT WORK ON LATEST WAZUH VERSIONS - FOLLOW THIS FOR NEW VERSIONS
+# ABOVE ACTIVE RESPONSE NOT WORK ON LATEST WAZUH VERSIONS - FOLLOW THIS FOR NEW VERSIONS and REMAINS "Decoders" and "rules" Remains SAME as ABOVE.
+
+# NOTE: From above we dont need to add <command> and <active_response> so insted of "ollama_enrich.sh" we use "usb_ollama_watcher.py" and 
 
 1. Create Python enrichment watcher
 
        nano /usr/local/bin/usb_ollama_watcher.py
+
+2. Permissions:
+
+       sudo chmod 755 /usr/local/bin/usb_ollama_watcher.py
+
+3. Create systemd service
+
+       [Unit]
+       Description=USB alert enrichment watcher (Wazuh rule 111000 -> Ollama)
+       After=network.target
+
+       [Service]
+       Type=simple
+       ExecStart=/usr/bin/python3 /usr/local/bin/usb_ollama_watcher.py
+       Restart=always
+       RestartSec=2
+
+       [Install]
+       WantedBy=multi-user.target
+
+4. Enable + start:
+
+       sudo systemctl daemon-reload
+       sudo systemctl enable --now usb-ollama-watcher.service
+       sudo systemctl status usb-ollama-watcher.service --no-pager
+
+5. Restart the watcher service (not Wazuh):
+
+       sudo systemctl restart usb-ollama-watcher.service
+
+7. Confirm the watcher is writing ANYTHING to your enrich log
+
+       sudo ls -l /var/ossec/logs/seceoknight-enrich.log
+       sudo tail -n 30 /var/ossec/logs/seceoknight-enrich.log
 
 
