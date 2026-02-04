@@ -71,7 +71,7 @@ rule:
 
 # ABOVE ACTIVE RESPONSE NOT WORK ON LATEST WAZUH VERSIONS - FOLLOW THIS FOR NEW VERSIONS and REMAINS "Decoders" and "rules" Remains SAME as ABOVE.
 
-# NOTE: From above we dont need to add <command> and <active_response> so insted of "ollama_enrich.sh" we use "usb_ollama_watcher.py" and 
+# NOTE: From above we dont need to add <command section> and <active_response> so insted of "ollama_enrich.sh" we use "usb_ollama_watcher.py" and 
 
 1. Create Python enrichment watcher
 
